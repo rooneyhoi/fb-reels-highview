@@ -8,7 +8,7 @@
         font-family: system-ui, sans-serif;
         font-size: 12px;
         padding: 8px;
-        width: 400px;
+        width: 420px;
         max-height: 600px;
         overflow: auto;
       }
@@ -17,7 +17,8 @@
         border-collapse: collapse;
         margin-top: 8px;
       }
-      th, td {
+      th,
+      td {
         border: 1px solid #ccc;
         padding: 4px;
         text-align: left;
@@ -37,8 +38,9 @@
         gap: 4px;
         align-items: center;
         flex-wrap: wrap;
+        margin-bottom: 4px;
       }
-      input[type="number"] {
+      input[type='number'] {
         width: 90px;
         font-size: 11px;
       }
@@ -51,6 +53,7 @@
         height: 120px;
         font-size: 11px;
         margin-top: 6px;
+        font-family: monospace;
       }
     </style>
   </head>
@@ -63,6 +66,7 @@
       <button id="scanBtn">Scan Reels</button>
       <button id="copyMarkdownBtn" disabled>Copy Markdown</button>
       <button id="copyCsvBtn" disabled>Copy CSV</button>
+      <button id="copySimpleBtn" disabled>Copy URL,Views</button>
     </div>
 
     <div id="status"></div>
@@ -79,7 +83,11 @@
       <tbody></tbody>
     </table>
 
-    <textarea id="exportText" readonly placeholder="Exported text will appear here..."></textarea>
+    <textarea
+      id="exportText"
+      readonly
+      placeholder="Exported text (Markdown / CSV / URL,Views) will appear here..."
+    ></textarea>
 
     <script src="popup.js"></script>
   </body>
