@@ -27,6 +27,7 @@ function scanReels(minViews = 0) {
 
     for (const s of innerSpans) {
       const t = (s.innerText || '').trim();
+      // dạng "3.1M", "275K", "2M"...
       if (/^\d[\d.,]*\s*[kKmM]?$/.test(t)) {
         rawText = t;
         break;
@@ -41,18 +42,18 @@ function scanReels(minViews = 0) {
   });
 
   const filtered = data
-    .filter(item => item.views >= minViews)
+    .filter((item) => item.views >= minViews)
     .sort((a, b) => b.views - a.views);
 
   return { total: data.length, filtered };
 }
 
-// Để popup có thể gọi Hàm này qua message passing
+// Lắng nghe message từ popup
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.type === 'SCAN_REELS') {
     const minViews = message.minViews ?? 0;
     const result = scanReels(minViews);
     sendResponse(result);
   }
-  // return true nếu muốn dùng async; ở đây sync là đủ
+  // Synchronous response nên không cần return true
 });
