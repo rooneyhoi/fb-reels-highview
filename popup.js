@@ -7,6 +7,7 @@ const tbody = document.querySelector('#resultTable tbody');
 const exportText = document.getElementById('exportText');
 const copyMarkdownBtn = document.getElementById('copyMarkdownBtn');
 const copyCsvBtn = document.getElementById('copyCsvBtn');
+const copySimpleBtn = document.getElementById('copySimpleBtn');
 
 let lastData = [];
 
@@ -72,6 +73,13 @@ function buildCsv(list) {
   return csv;
 }
 
+// Dạng đơn giản: URL,Views (để dán thẳng vào Google Sheets)
+function buildSimple(list) {
+  // Nếu Google Sheets của bạn dùng ; làm separator,
+  // có thể đổi dấu phẩy dưới đây thành ;
+  return list.map((item) => `${item.url},${item.views}`).join('\n');
+}
+
 async function copyToClipboard(text) {
   try {
     await navigator.clipboard.writeText(text);
@@ -116,8 +124,7 @@ scanBtn.addEventListener('click', () => {
 
         renderTable(lastData);
 
-        statusEl.textContent =
-          `Found ${lastData.length} / ${total} reels (views >= ${minViews}).`;
+        statusEl.textContent = `Found ${lastData.length} / ${total} reels (views >= ${minViews}).`;
 
         const md = buildMarkdown(lastData);
         exportText.value = md;
@@ -125,6 +132,7 @@ scanBtn.addEventListener('click', () => {
         const disabled = lastData.length === 0;
         copyMarkdownBtn.disabled = disabled;
         copyCsvBtn.disabled = disabled;
+        copySimpleBtn.disabled = disabled;
       }
     );
   });
@@ -140,4 +148,10 @@ copyCsvBtn.addEventListener('click', () => {
   const csv = buildCsv(lastData);
   exportText.value = csv;
   copyToClipboard(csv);
+});
+
+copySimpleBtn.addEventListener('click', () => {
+  const simple = buildSimple(lastData);
+  exportText.value = simple;
+  copyToClipboard(simple);
 });
