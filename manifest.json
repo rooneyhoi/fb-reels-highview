@@ -1,0 +1,18 @@
+{
+  "manifest_version": 3,
+  "name": "FB Reels High View Extractor",
+  "version": "1.0.0",
+  "description": "Scan Facebook Reels on a page and list reels with high views.",
+  "permissions": ["scripting", "activeTab"],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Scan Reels"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.facebook.com/*"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}
