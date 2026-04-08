@@ -55,5 +55,5 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     const result = scanReels(minViews);
     sendResponse(result);
   }
-  // Synchronous response nên không cần return true
+  return true; // Bắt buộc với Manifest V3 để giữ channel message mở
 });
